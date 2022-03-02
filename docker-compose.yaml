@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  etl:
+    build: .
+    restart: on-failure
+    environment:
+      - CONFIG_PATH=/app/config.ini
+      - DB=postgres
+    volumes:
+      - ./samples/insurance-app/blocks/:/tmp/blocks
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+
+  metabase:
+    image: metabase/metabase
+    ports:
+      - 3000:3000
+
+  
