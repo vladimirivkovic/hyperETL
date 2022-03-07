@@ -1,0 +1,91 @@
+{
+    "header": {
+        "block_number": 123,
+        "block_hash": "8w3yghto82wg0783tughb4u5gt",
+        "previous_block_hash": "iuset4r089w34y5u9yishgt9rtyh",
+        "timestamp": "2022-03-03T10:10:10",
+        "signature": "jsfdnbgoberogtewrg"
+    },
+    "transactions": [
+        {
+            "header": {
+                "transaction_id": "kzsurdy569w37t",
+                "smart_contract": "my_cc",
+                "creator": "MyOrg",
+                "timestamp": "2022-03-03T10:10:10"
+            },
+            "data": {
+                "input": {
+                    "method": "myMethod",
+                    "args": ["arg1", "arg2"]
+                },
+                "result": {
+                    "status": "200",
+                    "response": "success",
+                    "reads": [
+                        {
+                            "key": "k1",
+                            "version": {}
+                        },
+                        {
+                            "key": "k2",
+                            "version": {}
+                        }
+                    ],
+                    "writes": [
+                        {
+                            "key": "k1",
+                            "value": "eziy45h872y3q4578tgh028645t",
+                            "is_delete": false
+                        },
+                        {
+                            "key": "k3",
+                            "value": "",
+                            "is_delete": true
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "header": {
+                "transaction_id": "iusey6873wgh45yw43",
+                "smart_contract": "my_sc",
+                "creator": "MyOrg2",
+                "timestamp": "2022-03-03T10:10:10"
+            },
+            "data": {
+                "input": {
+                    "method": "myFunc",
+                    "args": ["argx", "argy"]
+                },
+                "result": {
+                    "status": "200",
+                    "response": "success",
+                    "reads": [
+                        {
+                            "key": "q1",
+                            "version": {}
+                        },
+                        {
+                            "key": "q2",
+                            "version": {}
+                        }
+                    ],
+                    "writes": [
+                        {
+                            "key": "q1",
+                            "value": "xdiu56yhw874h5gtyb4",
+                            "is_delete": false
+                        },
+                        {
+                            "key": "q3",
+                            "value": "",
+                            "is_delete": true
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

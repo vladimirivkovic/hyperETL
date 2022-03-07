@@ -3,6 +3,7 @@ import os
 import sys
 import traceback
 import configparser
+import json
 
 from extractor.block_extractor import BlockExtractor
 from extractor.transaction_extractor import TransactionExtractor
@@ -10,6 +11,8 @@ from extractor.key_extractor import KeyExtractor
 
 from etl.loader import load_blocks, load_transactions, load_cc_args, load_keys, load_key_history, clear_all, init_db
 
+# from fabric_transformer.block_transformer import BlockTransformer
+from iroha_transformer.block_transformer import BlockTransformer
 
 def read_config():
     config = configparser.ConfigParser()
@@ -47,9 +50,15 @@ def etl(blocks, txs):
 def main():
     BASE_DIR = read_config()
 
-    blocks, txs = extract_data(BASE_DIR)
+    # blocks = BlockTransformer(BASE_DIR).blocks
+    # print(json.dumps(blocks[5], indent=2))
 
-    etl(blocks, txs)
+    blocks = BlockTransformer("/tmp/iroha/blocks/blocks.txt").blocks
+    print(json.dumps(blocks[5], indent=2))
+
+    # blocks, txs = extract_data(BASE_DIR)
+
+    # etl(blocks, txs)
 
 
 if __name__ == "__main__":
