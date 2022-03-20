@@ -1,3 +1,4 @@
+from unicodedata import name
 import jmespath
 
 from util.logger import get_logger
@@ -86,14 +87,28 @@ class TransactionTransformer:
         return {
             "status": response["status"],
             "response": response["payload"],
-            "rwset": rwset
+            **rwset
         }
 
     @staticmethod
     def _decode_rwset_values(rwset):
+        ret = {"reads": [], "writes": []}
         for rws in rwset:
+            namespace = rws["namespace"]
             for rs in rws["rwset"]["reads"]:
-                rs["value"] = decode(rs["value"]) if "value" in rs else None
+                value = decode(rs["value"]) if "value" in rs else None
+                ret["reads"].append({
+                    "key": rs["key"],
+                    "value": value,
+                    "version": rs["version"],
+                    "namespace": namespace
+                })
             for ws in rws["rwset"]["writes"]:
-                ws["value"] = decode(ws["value"]) if "value" in ws else None
-        return rwset
+                value = decode(ws["value"]) if "value" in ws else None
+                ret["writes"].append({
+                    "key": ws["key"],
+                    "value": value,
+                    "is_delete": ws["is_delete"] if "is_delete" in ws else False,
+                    "namespace": namespace
+                })
+        return ret

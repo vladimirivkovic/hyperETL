@@ -1,2 +1,3 @@
+pymongo
 psycopg2-binary
 jmespath

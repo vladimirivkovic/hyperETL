@@ -41,14 +41,6 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-
-  # nifi:
-  #   image: apache/nifi:1.15.3
-  #   ports:
-  #     - 8443:8443
-  #   volumes:
-  #     - ./samples/insurance-app/blocks/:/tmp/insurance-app/blocks
-  #   environment:
-  #     - SINGLE_USER_CREDENTIALS_USERNAME=admin
-  #     - SINGLE_USER_CREDENTIALS_PASSWORD=nifi123admin
+    depends_on:
+      - mongo
   

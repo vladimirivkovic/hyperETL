@@ -10,8 +10,12 @@ class BlockTransformer:
         self.logger = get_logger(__name__)
         self.base_dir = base_dir
         self.prefix = prefix
-        self.blocks = [BlockTransformer.transform(
-            raw_block) for raw_block in self._extract_raw_blocks_from_base_dir()]
+        self.metadata = {"metadata": {"blockchain": "fabric", "version": "1.4.7",
+                                 "source": self.base_dir}}
+        self.blocks = [
+            {**(self.metadata), **(BlockTransformer.transform(raw_block))} 
+            for raw_block in self._extract_raw_blocks_from_base_dir()
+        ]
 
     def _extract_raw_blocks_from_base_dir(self):
         blocks = []
@@ -35,17 +39,17 @@ class BlockTransformer:
         with open(filename, encoding="utf8") as f:
             return json.load(f)
 
-    @staticmethod
+    @ staticmethod
     def transform_header(raw_block):
         return {
-            "block_number": raw_block["header"]["number"],
+            "block_number": int(raw_block["header"]["number"]),
             "block_hash": raw_block["header"]["data_hash"],
             "previous_block_hash": raw_block["header"]["previous_hash"],
             "signer": raw_block["metadata"]["metadata"][0],
             "timestamp": None                                       # TODO: find
         }
 
-    @staticmethod
+    @ staticmethod
     def transform(raw_block):
         return {
             "header": BlockTransformer.transform_header(raw_block),

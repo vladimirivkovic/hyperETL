@@ -81,7 +81,7 @@ class TransactionTransformer:
             "result": {
                 "status": None,
                 "response": None,
-                "reads": None,
+                "reads": [],
                 "writes": [{"key": arg[0], "value": arg[1]} for arg in command["args"]]
             }
         }

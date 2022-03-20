@@ -7,8 +7,12 @@ class BlockTransformer:
     def __init__(self, blocks_file_path: str) -> None:
         self.logger = get_logger(__name__)
         self.blocks_file_path = blocks_file_path
-        self.blocks = [BlockTransformer.transform(
-            raw_block) for raw_block in self._extract_raw_blocks_from_txt_file()]
+        self.metadata = {"metadata": {"blockchain": "iroha", "version": "",
+                                      "source": self.blocks_file_path}}
+        self.blocks = [
+            {**(self.metadata), **(BlockTransformer.transform(raw_block))} 
+            for raw_block in self._extract_raw_blocks_from_txt_file()
+        ]
 
     def _extract_raw_blocks_from_txt_file(self):
         filename = self.blocks_file_path
@@ -20,16 +24,16 @@ class BlockTransformer:
         with open(filename) as fin:
             blocks = fin.read().split("block ")
 
-        return blocks
+        return blocks[1:]
 
-    @staticmethod
+    @ staticmethod
     def transform(raw_block):
         return {
             "header": BlockTransformer.transform_header(raw_block),
-            "transactions": TransactionTransformer.transform(BlockTransformer.get_raw_transactions(raw_block))
+            "transactions": [TransactionTransformer.transform(BlockTransformer.get_raw_transactions(raw_block))]
         }
 
-    @staticmethod
+    @ staticmethod
     def transform_header(raw_block):
         header = {
             "block_number": None,
@@ -43,7 +47,8 @@ class BlockTransformer:
         for line in lines:
             no_ident = line.strip()
             if no_ident.startswith("height:"):
-                header["block_number"] = no_ident[(len("height:")+1):].strip()
+                header["block_number"] = int(
+                    no_ident[(len("height:")+1):].strip())
             if no_ident.startswith("signature:"):
                 header["block_hash"] = no_ident[(len("signature:")+1):].strip()
             if no_ident.startswith("prev_block_hash:"):
@@ -55,6 +60,7 @@ class BlockTransformer:
             if no_ident.startswith("public_key:"):
                 header["signer"] = no_ident[(len("public_key:")+1):].strip()
 
+        print(header)
         return header
 
     def get_raw_transactions(raw_block):
