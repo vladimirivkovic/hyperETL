@@ -17,7 +17,7 @@ CREATE TABLE blocks (
 
 CREATE TABLE transactions (
     transaction_id SERIAL PRIMARY KEY,
-    transaction_hash VARCHAR(128),
+    transaction_hash VARCHAR(512),
     transaction_timestamp TIMESTAMP,
     block_id INT NOT NULL,
     smart_contract VARCHAR(128),
@@ -42,9 +42,9 @@ CREATE TABLE operations (
     key_id VARCHAR(128),
     transaction_id INT,
     operation_type CHAR(1), -- R, W, Q
-    payload VARCHAR(10024),
+    payload TEXT,
     is_delete BOOLEAN,
     version_ VARCHAR(128),
-    CONSTRAINT fk_operations FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
-    CONSTRAINT uq_operations UNIQUE (transaction_id, key_id, operation_type)
+    -- CONSTRAINT uq_operations UNIQUE (transaction_id, key_id, operation_type),
+    CONSTRAINT fk_operations FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
 );

@@ -1,7 +1,6 @@
-import jmespath
-
 from util.logger import get_logger
 from util.decoder import decode
+from util.value_converter import timestamp_to_datetime
 
 
 class TransactionTransformer:
@@ -33,8 +32,8 @@ class TransactionTransformer:
                 header["creator"] = no_ident[(
                     len("creator_account_id:")+1):].strip()
             if no_ident.startswith("created_time:"):
-                header["timestamp"] = no_ident[(
-                    len("created_time:")+1):].strip()
+                header["timestamp"] = timestamp_to_datetime(
+                    no_ident[(len("created_time:")+1):].strip()[:-3])
 
         return header
 

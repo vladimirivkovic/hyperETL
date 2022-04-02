@@ -1,8 +1,6 @@
-
 import os
 import sys
 import traceback
-import configparser
 import json
 
 from collections import OrderedDict
@@ -11,16 +9,16 @@ from fabric_transformer.block_transformer import BlockTransformer as FabricBlock
 from iroha_transformer.block_transformer import BlockTransformer as IrohaBlockTransformer
 
 from connection.mongo import get_database
-from loader.json2sql import init_db, clear_all, load_blocks, load_transactions
+from loader.json2sql import init_db, clear_all, load_blocks, load_transactions, load_sc_args, load_operations
 
 DB_NAME = "blockchain"
 COL_NAME = "blocks"
 
 
 def read_config():
-    config = configparser.ConfigParser()
-    config.read(os.environ["CONFIG_PATH"])
-    return config["DEFAULT"]["BASE_DIR"]
+    blockchain = os.environ["BLOCKCHAIN"]
+    base_dir = os.environ["BASE_PATH"]
+    return blockchain, base_dir
 
 
 def load_transformed_json(blocks, drop=False):
@@ -54,6 +52,10 @@ def blocks_into_target_db():
         load_blocks(blocks)
         blocks = col.find()
         load_transactions(blocks)
+        blocks = col.find()
+        load_sc_args(blocks)
+        blocks = col.find()
+        load_operations(blocks)
     except Exception as _:
         exc_info = sys.exc_info()
         traceback.print_exception(*exc_info)
@@ -62,15 +64,17 @@ def blocks_into_target_db():
 
 
 def main():
-    BASE_DIR = read_config()
+    BC_TYPE, BASE_DIR = read_config()
+    print(BC_TYPE, BASE_DIR)
 
-    # blocks = FabricBlockTransformer(BASE_DIR).blocks
-    # print(json.dumps(blocks[5], indent=2))
+    blocks = []
 
-    # blocks = IrohaBlockTransformer("/tmp/iroha/blocks/blocks.txt").blocks
-    # print(json.dumps(blocks[0], indent=2))
-    # load_transformed_json(blocks, drop=True)
+    if BC_TYPE == "fabric":
+        blocks = FabricBlockTransformer(BASE_DIR).blocks
+    elif BC_TYPE == "iroha":
+        blocks = IrohaBlockTransformer(BASE_DIR).blocks
 
+    load_transformed_json(blocks, drop=True)
     blocks_into_target_db()
 
 

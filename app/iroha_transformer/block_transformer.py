@@ -1,5 +1,6 @@
 from util.logger import get_logger
 from util.files import exists
+from util.value_converter import timestamp_to_datetime
 from iroha_transformer.transaction_transformer import TransactionTransformer
 
 
@@ -10,7 +11,7 @@ class BlockTransformer:
         self.metadata = {"metadata": {"blockchain": "iroha", "version": "",
                                       "source": self.blocks_file_path}}
         self.blocks = [
-            {**(self.metadata), **(BlockTransformer.transform(raw_block))} 
+            {**(self.metadata), **(BlockTransformer.transform(raw_block))}
             for raw_block in self._extract_raw_blocks_from_txt_file()
         ]
 
@@ -55,8 +56,8 @@ class BlockTransformer:
                 header["previous_block_hash"] = no_ident[(
                     len("prev_block_hash:")+1):].strip()
             if no_ident.startswith("created_time:"):
-                header["timestamp"] = no_ident[(
-                    len("created_time:")+1):].strip()
+                header["timestamp"] = timestamp_to_datetime(
+                    no_ident[(len("created_time:")+1):].strip()[:-3])
             if no_ident.startswith("public_key:"):
                 header["signer"] = no_ident[(len("public_key:")+1):].strip()
 
