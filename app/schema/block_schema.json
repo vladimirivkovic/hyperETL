@@ -1,0 +1,213 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "properties": {
+      "header": {
+        "bsonType": "object",
+        "properties": {
+          "block_number": {
+            "bsonType": "int"
+          },
+          "block_hash": {
+            "bsonType": [
+              "string",
+              "null"
+            ]
+          },
+          "previous_block_hash": {
+            "bsonType": [
+              "string",
+              "null"
+            ]
+          },
+          "timestamp": {
+            "bsonType": [
+              "string",
+              "null"
+            ]
+          },
+          "signature": {
+            "bsonType": "string"
+          }
+        },
+        "required": [
+          "block_number",
+          "block_hash",
+          "previous_block_hash",
+          "timestamp"
+        ]
+      },
+      "transactions": {
+        "bsonType": "array",
+        "items": [
+          {
+            "bsonType": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "header": {
+                "bsonType": "object",
+                "properties": {
+                  "transaction_id": {
+                    "bsonType": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "smart_contract": {
+                    "bsonType": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "creator": {
+                    "bsonType": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "timestamp": {
+                    "bsonType": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "transaction_id",
+                  "smart_contract",
+                  "creator",
+                  "timestamp"
+                ]
+              },
+              "data": {
+                "bsonType": "array",
+                "items": [
+                  {
+                    "bsonType": "object",
+                    "properties": {
+                      "input": {
+                        "bsonType": "object",
+                        "properties": {
+                          "method": {
+                            "bsonType": "string"
+                          },
+                          "args": {
+                            "bsonType": "array",
+                            "items": [
+                              {
+                                "bsonType": "string"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "method",
+                          "args"
+                        ]
+                      },
+                      "result": {
+                        "bsonType": "object",
+                        "properties": {
+                          "status": {
+                            "bsonType": [
+                              "int",
+                              "null"
+                            ]
+                          },
+                          "response": {
+                            "bsonType": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reads": {
+                            "bsonType": "array",
+                            "items": [
+                              {
+                                "bsonType": "object",
+                                "properties": {
+                                  "key": {
+                                    "bsonType": "string"
+                                  },
+                                  "value": {
+                                    "bsonType": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "version": {
+                                    "bsonType": [
+                                      "object",
+                                      "null"
+                                    ]
+                                  },
+                                  "namespace": {
+                                    "bsonType": "string"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "version"
+                                ]
+                              }
+                            ]
+                          },
+                          "writes": {
+                            "bsonType": "array",
+                            "items": [
+                              {
+                                "bsonType": "object",
+                                "properties": {
+                                  "key": {
+                                    "bsonType": "string"
+                                  },
+                                  "value": {
+                                    "bsonType": "string"
+                                  },
+                                  "is_delete": {
+                                    "bsonType": "bool"
+                                  },
+                                  "namespace": {
+                                    "bsonType": "string"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "value"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "response",
+                          "reads",
+                          "writes"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input",
+                      "result"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "header",
+              "data"
+            ]
+          }
+        ]
+      }
+    },
+    "required": [
+      "header",
+      "transactions"
+    ]
+  }
+}

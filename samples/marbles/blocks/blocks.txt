@@ -1,0 +1,326 @@
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              add_peer {
+                peer {
+                  address: "127.0.0.1:10001"
+                  peer_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+                }
+              }
+            }
+            commands {
+              create_role {
+                role_name: "admin"
+                permissions: can_add_peer
+                permissions: can_add_signatory
+                permissions: can_create_account
+                permissions: can_create_domain
+                permissions: can_get_all_acc_ast
+                permissions: can_get_all_acc_ast_txs
+                permissions: can_get_all_acc_detail
+                permissions: can_get_all_acc_txs
+                permissions: can_get_all_accounts
+                permissions: can_get_all_signatories
+                permissions: can_get_all_txs
+                permissions: can_get_blocks
+                permissions: can_get_roles
+                permissions: can_read_assets
+                permissions: can_remove_signatory
+                permissions: can_set_quorum
+              }
+            }
+            commands {
+              create_role {
+                role_name: "user"
+                permissions: can_add_signatory
+                permissions: can_get_my_acc_ast
+                permissions: can_get_my_acc_ast_txs
+                permissions: can_get_my_acc_detail
+                permissions: can_get_my_acc_txs
+                permissions: can_get_my_account
+                permissions: can_get_my_signatories
+                permissions: can_get_my_txs
+                permissions: can_grant_can_add_my_signatory
+                permissions: can_grant_can_remove_my_signatory
+                permissions: can_grant_can_set_my_account_detail
+                permissions: can_grant_can_set_my_quorum
+                permissions: can_grant_can_transfer_my_assets
+                permissions: can_receive
+                permissions: can_remove_signatory
+                permissions: can_set_quorum
+                permissions: can_transfer
+              }
+            }
+            commands {
+              create_role {
+                role_name: "money_creator"
+                permissions: can_add_asset_qty
+                permissions: can_create_asset
+                permissions: can_receive
+                permissions: can_transfer
+              }
+            }
+            commands {
+              create_domain {
+                domain_id: "test"
+                default_role: "user"
+              }
+            }
+            commands {
+              create_asset {
+                asset_name: "coin"
+                domain_id: "test"
+                precision: 2
+              }
+            }
+            commands {
+              create_account {
+                account_name: "admin"
+                domain_id: "test"
+                public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+              }
+            }
+            commands {
+              create_account {
+                account_name: "test"
+                domain_id: "test"
+                public_key: "716fe505f69f18511a1b083915aa9ff73ef36e6688199f3959750db38b8f4bfc"
+              }
+            }
+            commands {
+              append_role {
+                account_id: "admin@test"
+                role_name: "admin"
+              }
+            }
+            commands {
+              append_role {
+                account_id: "admin@test"
+                role_name: "money_creator"
+              }
+            }
+            quorum: 1
+          }
+        }
+      }
+      tx_number: 1
+      height: 1
+      prev_block_hash: "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              create_domain {
+                domain_id: "domain"
+                default_role: "user"
+              }
+            }
+            commands {
+              create_asset {
+                asset_name: "coin"
+                domain_id: "domain"
+                precision: 2
+              }
+            }
+            creator_account_id: "admin@test"
+            created_time: 1646668307192
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+          signature: "0fefbd7e32911f3607416ff17bfb1064f7b2f28520601357a2659aa85487f8c7912faa3230da33cf7b3d33358e48ad91c001e26e2dddbee687946794f5b6dc0e"
+        }
+      }
+      height: 2
+      prev_block_hash: "9debdb1a70db2cede2222427b849f6bf7ab20845da7c3db1837c0df25ec1c61a"
+      created_time: 1646668307809
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "4e417cc40893cac1a56de3c1268356fd35e13ae7b8243e11895331c857b10472303dd4e0ae5dc50e67c97cd6db28e5e6a9d92d10cb3b2f7ebd56f04f4da5da0b"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              add_asset_quantity {
+                asset_id: "coin#domain"
+                amount: "1000.00"
+              }
+            }
+            creator_account_id: "admin@test"
+            created_time: 1646668307830
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+          signature: "55c4eed1d5d21f2df29cd6959f509cdded02104fabebd2c7ab6959af499da687d0a78d3a8c24d2c75f01207b308577361eccb170133c45161e9ab4c29d0ab503"
+        }
+      }
+      height: 3
+      prev_block_hash: "d062980bb3ff292b27b0632c7b6b5b814a448a88b3b72c4c675e1b920a257b5b"
+      created_time: 1646668310830
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "4adce3a3a40b5547aff5999d7e1b29479385ec9f50fa5ed0ca184a6895648f9bcd31a72c281e55afd517fdf796f0b28d28731eecd4c977bda65947b38c90200c"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              create_account {
+                account_name: "userone"
+                domain_id: "domain"
+                public_key: "7b73b2e61c9be9b695575df1a317058ada760fee2ca2a40d1dbf8f777ae7c589"
+              }
+            }
+            creator_account_id: "admin@test"
+            created_time: 1646668310859
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+          signature: "aebb0093b0ff52b23970c2ba88d58a164132c51e955acf6f15618b2521e6892d39cf085d79c6dfec5a49c20550dbd13f646e62735721ddeeae72c4d84ffef407"
+        }
+      }
+      height: 4
+      prev_block_hash: "abb812c078b2d5f7abefae45d3f96aaa2bf894d3142ec5305430b04aaac5d4a0"
+      created_time: 1646668313859
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "dca38ff96deaf97381d435c9994c01492efe12bd03a80dc199365b65736e4c62c9f23fdd3dc989d7b8920b9df6a9d83498773332482e391b8d7ed64b7932130f"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              transfer_asset {
+                src_account_id: "admin@test"
+                dest_account_id: "userone@domain"
+                asset_id: "coin#domain"
+                description: "init top up"
+                amount: "2.00"
+              }
+            }
+            creator_account_id: "admin@test"
+            created_time: 1646668313892
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+          signature: "e1d255ac4d2497e0ee47f1c24f3d822461c27e7c9aa17324706200d0461c8aea50376265661c26375d3852e545aae97092332cc803a1f6d992254c89f45bb602"
+        }
+      }
+      height: 5
+      prev_block_hash: "c3cddf4d60dc76697468bb2231891fb54ecb53cee59b56784c0b78523adcda98"
+      created_time: 1646668316893
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "d4ff4cdbd43ab6307dd0f0047ef6908deff47fd3e7261481e20fa87d0143f57971343f816d86fd67f7ca9176e129246250cf62fa19e8d4731ec52852e0e1770e"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              grant_permission {
+                account_id: "admin@test"
+                permission: can_set_my_account_detail
+              }
+            }
+            creator_account_id: "userone@domain"
+            created_time: 1646668316926
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "7b73b2e61c9be9b695575df1a317058ada760fee2ca2a40d1dbf8f777ae7c589"
+          signature: "f2b322875d131723963c6aadedde09fed4b9d7d97f05e401c0cd9dbc72a990a467dd54d309b44956f4be55d7cf02c8d4973fe83a32a0f1ed08ba97b2327fa302"
+        }
+      }
+      height: 6
+      prev_block_hash: "9bb3d61e4f7c5f879ff50b6e00d1369665ae14533e897793596484aed3a5b20b"
+      created_time: 1646668319927
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "2af93685f28f1126a6bb0fd871debee54edace88878bfc76ec4b1c51d940271eb284c16b2f7e00db4620a5f74df6609a6ace1f025db57dbfcb6fad6aeb2c0b07"
+    }
+  }
+}
+
+block {
+  block_v1 {
+    payload {
+      transactions {
+        payload {
+          reduced_payload {
+            commands {
+              set_account_detail {
+                account_id: "userone@domain"
+                key: "age"
+                value: "18"
+              }
+            }
+            creator_account_id: "admin@test"
+            created_time: 1646668319954
+            quorum: 1
+          }
+        }
+        signatures {
+          public_key: "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910"
+          signature: "3438e514ac4222536a38503f501c6f62d06e9d691c7d5b617610fd64ef192cf804a454044eb79147260c4b8a65844c3d0898f5b06f9339372b656adbc54b5b09"
+        }
+      }
+      height: 7
+      prev_block_hash: "ee07191f8cbfc5e81292711b75fa4c3b0417b06ee668106c200edb12ffe87c1d"
+      created_time: 1646668322954
+    }
+    signatures {
+      public_key: "bddd58404d1315e0eb27902c5d7c8eb0602c16238f005773df406bc191308929"
+      signature: "8600bcfe7c90009d478d7a4421588d4a4e5b81e6ad3b50239806ebfdccb1e44f8e54e73479acfa1e7002de6ad7310a20a89273daa9e9e085ad94d80307041d0e"
+    }
+  }
+}
+
